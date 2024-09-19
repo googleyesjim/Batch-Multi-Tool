@@ -1,4 +1,10 @@
 @echo off
+title raped by rw
+chcp 65001 >nul
+cd files
+color A
+:start
+call :banner
 setlocal
 set serverID=123456789012345678
 set botToken=bot_token_here
@@ -65,3 +71,15 @@ set bot = discord_ext.commands.Bot(command_prefix="!", intents=discord.Intents.a
 set bot.run = bot.start
 bot.run(%botToken%)
 goto :eof
+:banner
+echo.
+echo.
+echo                   $$\ $$\   $$\ $$\   $$\ $$$$$$$$\ $$$$$$$\  
+echo                   $$\ $$ |$$ |  $$ |$$ | $$  |$$  _____|$$  __$$\ 
+echo                   $$$$\ $$ |$$ |  $$ |$$ |$$  / $$ |      $$ |  $$ |
+echo                   $$ $$\$$ |$$ |  $$ |$$$$$  /  $$$$$\    $$ |  $$ |
+echo                   $$ \$$$$ |$$ |  $$ |$$  $$<   $$  __|   $$ |  $$ |
+echo                   $$ |\$$$ |$$ |  $$ |$$ |\$$\  $$ |      $$ |  $$ |
+echo                   $$ | \$$ |\$$$$$$  |$$ | \$$\ $$$$$$$$\ $$$$$$$  |
+echo                   \__|  \__| \______/ \__|  \__|\________|\_______/ 
+echo.
