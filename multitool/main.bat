@@ -2,7 +2,7 @@
 title raped by rw
 chcp 65001 >nul
 cd files
-color 5
+color A
 :start
 call :banner
 
