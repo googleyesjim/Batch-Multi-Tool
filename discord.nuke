@@ -1,0 +1,67 @@
+@echo off
+setlocal
+set serverID=123456789012345678
+set botToken=bot_token_here
+
+call :run "%~f0"
+goto :eof
+
+:run
+set "scriptPath=%~f0"
+echo.
+echo Starting Discord server nuke...
+
+:: Install required libraries
+call :install_pip pip discord-py-rpc
+
+:: Setup virtual environment
+call :create_venv %TEMP%\discord_nuker
+call :activate %TEMP%\discord_nuker
+
+:: Install Discord.py and required libraries
+call :install_pip discord.py[voice] discord-py-selfbot discord-py-humanize
+
+:: Import libraries
+call :import_module discord discord_ext discord_ext.commands
+
+:: Create bot and connect to Discord
+call :create_bot %botToken%
+call :run_bot %serverID%
+
+echo.
+echo Discord server nuke completed.
+
+goto :eof
+
+:install_pip
+@"%~dp0\pip.exe" install %1
+echo Installed %1
+goto :eof
+
+:create_venv
+if not exist %~1\Scripts mkdir %~1\Scripts
+if not exist %~1\Scripts\activate.bat (
+    echo @"%~dp0\python.exe" -m venv %1
+    call :create_activate_bat %1
+)
+goto :eof
+
+:activate
+call :activate_bat %1
+goto :eof
+
+:import_module
+call :import_module_win32 discord
+call :import_module_discord discord_ext.commands
+goto :eof
+
+:create_bot
+set bot = discord.Client(intents=discord.Intents.all())
+goto :eof
+
+:run_bot
+call :import_module_discord discord_ext.commands.Bot
+set bot = discord_ext.commands.Bot(command_prefix="!", intents=discord.Intents.all())
+set bot.run = bot.start
+bot.run(%botToken%)
+goto :eof
